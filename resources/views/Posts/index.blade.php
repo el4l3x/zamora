@@ -1,17 +1,19 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Noticias - Zamora')
+
+@section('content_header')
+    <h1>Lista de Noticias</h1>
+@stop
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Lista de Noticias</div>
+    <p>Welcome to this beautiful admin panel.</p>
+@stop
 
-                <div class="card-body">
-                    <posts-index></posts-index>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    
+@stop

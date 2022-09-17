@@ -79,7 +79,7 @@
                             <div class="col-6">
     
                                 <div class="speaker">
-                                    <img src="{{ Storage::url($post->image->url) }}" alt="Speaker 1" class="img-fluid">
+                                    <img src="{{ asset('storage/'.$post->image->url) }}" alt="Speaker 1" class="img-fluid">
                                     <div class="details">
                                         <h3><a href="{{ route('home.show', $post) }}">{{ $post->name }}</a></h3>
                                         <p>
