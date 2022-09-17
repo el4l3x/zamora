@@ -6,6 +6,7 @@ use App\Models\Image;
 use App\Models\Post;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class PostSeeder extends Seeder
 {
