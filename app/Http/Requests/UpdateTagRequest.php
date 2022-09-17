@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateTagRequest extends FormRequest
 {
@@ -13,7 +14,11 @@ class UpdateTagRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if (Auth::check()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -24,7 +29,7 @@ class UpdateTagRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nombre' => 'required|unique:tags,name,'.$this->tag->id,
         ];
     }
 }

@@ -1,37 +1,36 @@
-@extends('layouts.app')
+@extends('adminlte::page')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Editar Categoria {{ $category->name }}</div>
+@section('title', 'Noticias - Zamora')
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form action="{{ route('categorias.update', $category) }}" method="POST">
-                        @method('PUT')
-                        @csrf
-                        <div class="form-group mb-3">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" name="nombre" id="nombre" class="form-control" value="{{ $category->name }}">
-                            @error('nombre')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary">Enviar</button>
-
-                    </form>
-
-                </div>
-            </div>
-        </div>
+@section('content_header')
+<div class="row">
+    <div class="col-9">
+        <h3>Editar Categoria {{ $category->name }}</h3>
     </div>
 </div>
-@endsection
+@stop
+
+@section('content')
+<form action="{{ route('categorias.update', $category) }}" method="POST">
+    @method('PUT')
+    @csrf
+    <div class="form-group mb-3">
+        <label for="nombre">Nombre</label>
+        <input type="text" name="nombre" id="nombre" class="form-control" value="{{ $category->name }}">
+        @error('nombre')
+            <span class="text-danger">{{ $message }}</span>
+        @enderror
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Enviar</button>
+
+</form>
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    
+@stop
