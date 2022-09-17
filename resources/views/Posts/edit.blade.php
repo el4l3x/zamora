@@ -1,37 +1,32 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Noticias - Zamora')
+
+@section('content_header')
+    <h3>Editar Noticia {{ $tag->name }}</h3>
+@stop
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Editar Noticia {{ $tag->name }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form action="{{ route('tags.update', $tag) }}" method="POST">
-                        @method('PUT')
-                        @csrf
-                        <div class="form-group mb-3">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" name="nombre" id="nombre" class="form-control" value="{{ $tag->name }}">
-                            @error('nombre')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary">Enviar</button>
-
-                    </form>
-
-                </div>
-            </div>
+    <form action="{{ route('tags.update', $tag) }}" method="POST">
+        @method('PUT')
+        @csrf
+        <div class="form-group mb-3">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre" class="form-control" value="{{ $tag->name }}">
+            @error('nombre')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
-    </div>
-</div>
-@endsection
+        
+        <button type="submit" class="btn btn-primary">Enviar</button>
+
+    </form>
+@stop
+
+@section('css')
+    
+@stop
+
+@section('js')
+    
+@stop

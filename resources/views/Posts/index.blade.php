@@ -1,17 +1,18 @@
 @extends('adminlte::page')
 
-@section('title', 'Noticias - Zamora')
+@section('title', 'Alcaldia Zamora')
 
 @section('content_header')
-    <h1>Lista de Noticias</h1>
+    <a class="btn btn-secondary btn-sm float-right" type="button" href="{{ route('posts.create') }}">Nueva Noticia</a>
+    <h3>Lista de Noticias</h3>
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+@livewire('admin.post-index')
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    
 @stop
 
 @section('js')

@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Category;
 use App\Models\Log;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -18,11 +22,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('status', 2)->latest('id')->get();
-
-        return view('Posts.index', [
-            'posts' => $posts,
-        ]);
+        return view('Posts.index');
     }
 
     /**
@@ -32,7 +32,13 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::select('id', 'name')->get();
+        $tags = Tag::select('id', 'name')->get();
+
+        return view('Posts.create', [
+            'categories' => $categories,
+            'tags' => $tags,
+        ]);
     }
 
     /**
@@ -43,7 +49,48 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            
+            $post = new Post();
+            $post->name = $request->nombre;
+            $post->slug = Str::slug($request->nombre);
+            $post->extract = $request->resumen;
+            $post->body = $request->cuerpo;+
+            $post->status = $request->status;
+            $post->category_id = $request->categoria;
+            $post->user_id = Auth::user()->id;
+            $post->save();
+
+            if ($request->file('imagen')) {
+                $url = Storage::put('posts', $request->file('imagen'));
+
+                $post->image()->create([
+                    'url' => $url,
+                ]);
+            }
+            
+            if ($request->tags) {
+                $post->tags()->attach($request->tags);
+            }
+
+            $log = new Log();
+            if ($request->status == 1) {
+                $log->accion = "Nueva noticia como borrador ".$post->id;
+            } else {
+                $log->accion = "Nueva noticia publicada ".$post->id;
+            }
+            $log->user_id = Auth::user()->id;
+            $log->save();
+
+            DB::commit();
+
+            return redirect()->route("posts.index");
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $th;
+        }
     }
 
     /**

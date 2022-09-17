@@ -107,7 +107,7 @@ return [
     */
 
     'preloader' => [
-        'enabled' => true,
+        'enabled' => false,
         'img' => [
             'path' => 'src/img/logo.png',
             'alt' => 'Cargando...',
@@ -329,7 +329,7 @@ return [
             'url'  => 'admin/tags',
             'icon' => 'far fa-fw fa-bookmark',
         ],
-        [
+        /* [
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
@@ -366,7 +366,7 @@ return [
                     'url'  => '#',
                 ],
             ],
-        ],
+        ], */
         ['header' => 'labels'],
         [
             'text'       => 'important',
@@ -537,5 +537,5 @@ return [
     |
     */
 
-    'livewire' => false,
+    'livewire' => true,
 ];

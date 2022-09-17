@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StorePostRequest extends FormRequest
 {
@@ -13,7 +14,12 @@ class StorePostRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        if (Auth::check()) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     /**
@@ -23,8 +29,21 @@ class StorePostRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+        $rules = [
+            'nombre' => 'required',
+            'status' => 'required|in:1,2',
+            'imagen' => 'image',
         ];
+
+        if ($this->status == 2) {
+            $rules = array_merge($rules, [
+                'categoria' => 'required',
+                'tags' => 'required',
+                'resumen' => 'required',
+                'cuerpo' => 'required',
+            ]);
+        }
+        
+        return $rules;
     }
 }

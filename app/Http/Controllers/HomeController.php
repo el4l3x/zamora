@@ -23,7 +23,7 @@ class HomeController extends Controller
 
     public function landing()
     {
-        $posts = Post::where('status', 2)->take(4)->get();
+        $posts = Post::where('status', 2)->latest('id')->take(4)->get();
 
         return view('Home.landing', [
             'posts' => $posts,
