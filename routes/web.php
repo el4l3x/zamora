@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'landing'])->name('home.landing');
 Route::get('/noticias', [HomeController::class, 'posts'])->name('home.posts');
-Route::get('post/{post}', [HomeController::class, 'show'])->name('home.show');
+Route::get('noticias/{noticia}', [HomeController::class, 'show'])->name('home.show');
 
 Route::middleware([
     'auth:sanctum',

@@ -123,13 +123,13 @@
 
     <script>
         ClassicEditor
-            .create( document.querySelector( '#extract' ) )
+            .create( document.querySelector( '#resumen' ) )
             .catch( error => {
                 console.log();( error );
             } );
             
         ClassicEditor
-        .create( document.querySelector( '#body' ) )
+        .create( document.querySelector( '#cuerpo' ) )
         .catch( error => {
             console.log( error );
         } );

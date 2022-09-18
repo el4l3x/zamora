@@ -42,7 +42,7 @@
 
         @yield('jumbotron')
 
-        <main id="main">
+        {{-- <main id="main"> --}}
 
             @yield('content')
 

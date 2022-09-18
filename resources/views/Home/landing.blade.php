@@ -13,12 +13,12 @@
 
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
-                <li class="menu-active"><a href="#intro">Inicio</a></li>
-                <li><a href="#nosotros">Nosotros</a></li>
-                <li><a href="#noticias">Noticias</a></li>
-                <li><a href="#galeria">Galeria</a></li>
-                <li><a href="#direcciones">Direcciones</a></li>
-                <li class="buy-tickets"><a href="#atencion-ciudadano">Atecion al Ciudadano</a></li>
+                    <li class="menu-active"><a href="#intro">Inicio</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#noticias">Noticias</a></li>
+                    <li><a href="#galeria">Galeria</a></li>
+                    <li><a href="#direcciones">Direcciones</a></li>
+                    <li class="buy-tickets"><a href="#atencion-ciudadano">Atecion al Ciudadano</a></li>
                 </ul>
             </nav><!-- #nav-menu-container -->
             
@@ -40,6 +40,7 @@
 @endsection
 
 @section('content')
+<main id="main">
     <!--==========================
     About Section
     ============================-->

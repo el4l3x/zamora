@@ -30,10 +30,10 @@ class HomeController extends Controller
         ]);
     }
 
-    public function show(Post $post)
+    public function show(Post $noticia)
     {
         return view('Home.single', [
-            'post' => $post,
+            'post' => $noticia,
         ]);
     }
 }

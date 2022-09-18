@@ -4,45 +4,73 @@
     <!--==========================
         Header
     ============================-->
-    <header id="header">
+    <header id="header" class="header-fixed">
         <div class="container">
 
-            <div id="logo" class="pull-left">
-                <a href="{{ route('home.landing') }}" class="scrollto"><img src="{{ asset('src/img/logo.png') }}" alt="" title=""></a>
-            </div>
+        <div id="logo" class="pull-left">
+            <!-- Uncomment below if you prefer to use a text logo -->
+            <!-- <h1><a href="#main">C<span>o</span>nf</a></h1>-->
+            <a href="index.html#intro" class="scrollto"><img src="{{ asset('src/img/logo.png') }}" alt="" title=""></a>
+        </div>
 
-            <nav id="nav-menu-container">
-                <ul class="nav-menu">
-                <li class="menu-active"><a href="#intro">Inicio</a></li>
-                <li><a href="#nosotros">Nosotros</a></li>
-                <li><a href="#noticias">Noticias</a></li>
-                <li><a href="#galeria">Galeria</a></li>
-                <li><a href="#direcciones">Direcciones</a></li>
-                <li class="buy-tickets"><a href="#atencion-ciudadano">Atecion al Ciudadano</a></li>
-                </ul>
-            </nav><!-- #nav-menu-container -->
-            
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+                <li class="menu-active"><a href="/#intro">Inicio</a></li>
+                <li><a href="/#nosotros">Nosotros</a></li>
+                <li><a href="/#noticias">Noticias</a></li>
+                <li><a href="/#galeria">Galeria</a></li>
+                <li><a href="/#direcciones">Direcciones</a></li>
+                <li class="buy-tickets"><a href="/#atencion-ciudadano">Atecion al Ciudadano</a></li>
+            </ul>
+        </nav><!-- #nav-menu-container -->
         </div>
     </header><!-- #header -->
 @endsection
 
 @section('content')
+<main id="main" class="main-page">
     <!--==========================
-    Detalle del post
+      Speaker Details Section
     ============================-->
-    <section id="nosotros">
+    <section id="speakers-details" class="wow fadeIn py-5">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h2>Misión</h2>
-                    <p class="text-justify">La Alcaldía es el órgano ejecutivo del Municipio ZAMORA, fundamentado en la base de un gobierno  planificado , eficiente y transparente,  es responsable de diseñar, ejecutar, regular y supervisar las políticas de gestión pública, para el beneficio ciudadano en su convivencia social armónica con el desarrollo urbano sostenible, comprometidos en la consolidación de la ciudad modelo que queremos.</p>
+          <div class="section-header">
+            <h2>{{ $post->name }}</h2>
+            <p>
+                @foreach ($post->tags as $tag)
+                    @if($loop->last)
+                        <a href="">{{ $tag->name }}</a>                                                            
+                    @else
+                        <a href="">{{ $tag->name }} - </a>                                                            
+                    @endif
+                @endforeach
+            </p>
+          </div>
+  
+          <div class="row">
+            <div class="col-md-6">
+              <img src="{{ asset('storage/'.$post->image->url) }}" alt="Speaker 1" class="img-fluid">
+            </div>
+  
+            <div class="col-md-6">
+              <div class="details">
+                {{-- <h2>Brenden Legros</h2> --}}
+                <div class="social">
+                  <a href=""><i class="fa fa-twitter"></i></a>
+                  <a href=""><i class="fa fa-facebook"></i></a>
+                  <a href=""><i class="fa fa-google-plus"></i></a>
+                  <a href=""><i class="fa fa-linkedin"></i></a>
                 </div>
 
-                <div class="col-lg-6">
-                    <h2>Visión</h2>
-                    <p class="text-justify">Ser el municipio modelo, multicéntrico, verde, planificado, inclusivo, con una economía local productiva y servicios públicos óptimos que garanticen la habitabilidad, las relaciones humanas entre sus ciudadanos y que recibe con beneplácito a todas aquellas personas que quieren hacer de nuestro municipio su nueva tierra de gracia.</p>
+                <div>
+                    {!!$post->body!!}
                 </div>
+              </div>
             </div>
+            
+          </div>
         </div>
+  
     </section>
+  
 @endsection
