@@ -57,7 +57,7 @@ class PostController extends Controller
             $post->name = $request->nombre;
             $post->slug = Str::slug($request->nombre);
             $post->extract = $request->resumen;
-            $post->body = $request->cuerpo;+
+            $post->body = $request->cuerpo;
             $post->status = $request->status;
             $post->category_id = $request->categoria;
             $post->user_id = Auth::user()->id;
@@ -112,7 +112,14 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return $post;
+        $categories = Category::select('id', 'name')->get();
+        $tags = Tag::select('id', 'name')->get();
+
+        return view('Posts.edit', [
+            'categories' => $categories,
+            'tags' => $tags,
+            'post' => $post,
+        ]);
     }
 
     /**
@@ -124,7 +131,54 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $post->name = $request->nombre;
+            $post->slug = Str::slug($request->nombre);
+            $post->extract = $request->resumen;
+            $post->body = $request->cuerpo;
+            $post->status = $request->status;
+            $post->category_id = $request->categoria;
+            $post->user_id = Auth::user()->id;
+            $post->save();
+
+            if ($request->file('imagen')) {
+                $url = Storage::put('posts', $request->file('imagen'));
+
+                if ($post->image) {
+                    Storage::delete($post->image->url);
+
+                    $post->image->update([
+                        'url' => $url
+                    ]);
+                } else {
+                    $post->image()->create([
+                        'url' => $url,
+                    ]);
+                }                
+            }
+            
+            if ($request->tags) {
+                $post->tags()->sync($request->tags);
+            }
+
+            $log = new Log();
+            if ($request->status == 1) {
+                $log->accion = "Editar noticia como borrador ".$post->id;
+            } else {
+                $log->accion = "Editar noticia publicada ".$post->id;
+            }
+            $log->user_id = Auth::user()->id;
+            $log->save();
+
+            DB::commit();
+
+            return redirect()->route("posts.index");            
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $th;
+        }
     }
 
     /**
@@ -138,6 +192,8 @@ class PostController extends Controller
         try {
             DB::beginTransaction();
 
+            Storage::delete($post->image->url);
+
             $post->delete();
 
             $log = new Log();
@@ -147,7 +203,7 @@ class PostController extends Controller
 
             DB::commit();
 
-            return true;
+            return redirect()->route("posts.index");
         } catch (\Throwable $th) {
             DB::rollBack();
 

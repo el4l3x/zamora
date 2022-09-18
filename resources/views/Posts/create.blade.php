@@ -22,8 +22,8 @@
                 <div class="form-group mb-3">
                     <label for="categoria">Categoria</label>
                     <select name="categoria" id="categoria" class="form-control">
-                        @foreach ($categories as $categorie)
-                            <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
                     @error('categoria')

@@ -21,8 +21,7 @@ class PostIndex extends Component
 
     public function render()
     {
-        $posts = Post::where('status', 2)
-            ->where('name', 'LIKE', '%'.$this->search.'%')
+        $posts = Post::where('name', 'LIKE', '%'.$this->search.'%')
             ->latest('id')
             ->paginate();
 

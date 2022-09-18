@@ -32,6 +32,8 @@ class HomeController extends Controller
 
     public function show(Post $noticia)
     {
+        $this->authorize('view', $noticia);
+
         return view('Home.single', [
             'post' => $noticia,
         ]);

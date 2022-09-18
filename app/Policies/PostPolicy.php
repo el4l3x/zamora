@@ -28,9 +28,13 @@ class PostPolicy
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Post $post)
+    public function view(?User $user, Post $post)
     {
-        //
+        if ($post->status == 2) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

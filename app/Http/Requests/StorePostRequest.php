@@ -18,8 +18,7 @@ class StorePostRequest extends FormRequest
             return true;
         } else {
             return false;
-        }
-        
+        }        
     }
 
     /**
@@ -30,7 +29,7 @@ class StorePostRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'nombre' => 'required',
+            'nombre' => 'required|unique:posts,name',
             'status' => 'required|in:1,2',
             'imagen' => 'image',
         ];
