@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Alcaldia Zamora',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -107,7 +107,7 @@ return [
     */
 
     'preloader' => [
-        'enabled' => false,
+        'enabled' => true,
         'img' => [
             'path' => 'src/img/logo.png',
             'alt' => 'Cargando...',
@@ -291,11 +291,11 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
+        /* [
             'type'         => 'navbar-search',
             'text'         => 'search',
             'topnav_right' => true,
-        ],
+        ], */
         [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
@@ -311,23 +311,28 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ], */
-        [
+        /* [
             'text'        => 'Noticias',
             'url'         => 'admin/posts',
             'icon'        => 'far fa-fw fa-file',
-            /* 'label'       => 4,
-            'label_color' => 'success', */
-        ],
-        ['header' => 'ADMINISTRADOR'],
+            'label'       => 4,
+            'label_color' => 'success',
+        ], */
+        ['header' => 'NOTICIAS'],
         [
-            'text' => 'Categorias',
-            'url'  => 'admin/categorias',
+            'text' => 'Borradores',
+            'url'  => 'admin/borradores',
             'icon' => 'fab fa-fw fa-buffer',
         ],
         [
-            'text' => 'Etiquetas (Tags)',
-            'url'  => 'admin/tags',
+            'text' => 'Publicadas',
+            'url'  => 'admin/posts',
             'icon' => 'far fa-fw fa-bookmark',
+        ],
+        [
+            'text' => 'Nueva',
+            'url'  => 'admin/posts/create',
+            'icon' => 'far fa-fw fa-file',
         ],
         /* [
             'text'    => 'multilevel',
@@ -367,7 +372,7 @@ return [
                 ],
             ],
         ], */
-        ['header' => 'labels'],
+        /* ['header' => 'labels'],
         [
             'text'       => 'important',
             'icon_color' => 'red',
@@ -382,7 +387,7 @@ return [
             'text'       => 'information',
             'icon_color' => 'cyan',
             'url'        => '#',
-        ],
+        ], */
     ],
 
     /*

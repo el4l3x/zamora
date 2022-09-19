@@ -32,9 +32,11 @@ Route::middleware([
 
     Route::prefix('admin')->group(function () {    
         Route::resources([
-            'categorias' => CategoryController::class,
-            'tags' => TagController::class,
+            /* 'categorias' => CategoryController::class,
+            'tags' => TagController::class, */
             'posts' => PostController::class,
         ]);
+
+        Route::get('borradores', [PostController::class, 'borradores'])->name('posts.borradores');
     });
 });

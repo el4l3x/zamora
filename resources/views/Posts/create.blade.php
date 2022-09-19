@@ -19,7 +19,7 @@
                     @enderror
                 </div>
                 
-                <div class="form-group mb-3">
+                {{-- <div class="form-group mb-3">
                     <label for="categoria">Categoria</label>
                     <select name="categoria" id="categoria" class="form-control">
                         @foreach ($categories as $category)
@@ -29,9 +29,9 @@
                     @error('categoria')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
-                </div>
+                </div> --}}
                 
-                <div class="form-group mb-3">
+                {{-- <div class="form-group mb-3">
                     <p class="font-weight-bold">Etiquetas</p>
                     @foreach ($tags as $tag)
                         <div class="form-check form-check-inline">
@@ -43,7 +43,7 @@
                         <br>
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="form-group mb-3">
                     <div class="custom-control custom-radio custom-control-inline">
@@ -79,13 +79,13 @@
                     </div>
                 </div>
 
-                <div class="form-group mb-3">
+                {{-- <div class="form-group mb-3">
                     <label for="resumen">Resumen</label>
                     <textarea name="resumen" id="resumen" class="form-control"></textarea>
                     @error('resumen')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
-                </div>
+                </div> --}}
                 
                 <div class="form-group mb-3">
                     <label for="cuerpo">Cuerpo de la Noticia</label>
@@ -122,11 +122,11 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
 
     <script>
-        ClassicEditor
+        /* ClassicEditor
             .create( document.querySelector( '#resumen' ) )
             .catch( error => {
                 console.log();( error );
-            } );
+            } ); */
             
         ClassicEditor
         .create( document.querySelector( '#cuerpo' ) )

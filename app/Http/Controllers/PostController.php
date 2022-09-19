@@ -24,6 +24,11 @@ class PostController extends Controller
     {
         return view('Posts.index');
     }
+    
+    public function borradores()
+    {
+        return view('Posts.borradores');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -32,13 +37,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Category::select('id', 'name')->get();
-        $tags = Tag::select('id', 'name')->get();
+        /* $categories = Category::select('id', 'name')->get();
+        $tags = Tag::select('id', 'name')->get(); */
 
-        return view('Posts.create', [
-            'categories' => $categories,
-            'tags' => $tags,
-        ]);
+        return view('Posts.create');
     }
 
     /**
@@ -56,10 +58,10 @@ class PostController extends Controller
             $post = new Post();
             $post->name = $request->nombre;
             $post->slug = Str::slug($request->nombre);
-            $post->extract = $request->resumen;
+            /* $post->extract = $request->resumen; */
             $post->body = $request->cuerpo;
             $post->status = $request->status;
-            $post->category_id = $request->categoria;
+            /* $post->category_id = $request->categoria; */
             $post->user_id = Auth::user()->id;
             $post->save();
 
@@ -71,9 +73,9 @@ class PostController extends Controller
                 ]);
             }
             
-            if ($request->tags) {
+            /* if ($request->tags) {
                 $post->tags()->attach($request->tags);
-            }
+            } */
 
             $log = new Log();
             if ($request->status == 1) {
@@ -86,7 +88,11 @@ class PostController extends Controller
 
             DB::commit();
 
-            return redirect()->route("posts.index");
+            if ($request->status == 1) {
+                return redirect()->route("posts.borradores");
+            } else {
+                return redirect()->route("posts.index");
+            }
         } catch (\Throwable $th) {
             DB::rollBack();
             return $th;
@@ -112,12 +118,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $categories = Category::select('id', 'name')->get();
-        $tags = Tag::select('id', 'name')->get();
+        /* $categories = Category::select('id', 'name')->get();
+        $tags = Tag::select('id', 'name')->get(); */
 
         return view('Posts.edit', [
-            'categories' => $categories,
-            'tags' => $tags,
             'post' => $post,
         ]);
     }
@@ -136,10 +140,10 @@ class PostController extends Controller
 
             $post->name = $request->nombre;
             $post->slug = Str::slug($request->nombre);
-            $post->extract = $request->resumen;
+            /* $post->extract = $request->resumen; */
             $post->body = $request->cuerpo;
             $post->status = $request->status;
-            $post->category_id = $request->categoria;
+            /* $post->category_id = $request->categoria; */
             $post->user_id = Auth::user()->id;
             $post->save();
 
@@ -159,9 +163,9 @@ class PostController extends Controller
                 }                
             }
             
-            if ($request->tags) {
+            /* if ($request->tags) {
                 $post->tags()->sync($request->tags);
-            }
+            } */
 
             $log = new Log();
             if ($request->status == 1) {
@@ -174,7 +178,11 @@ class PostController extends Controller
 
             DB::commit();
 
-            return redirect()->route("posts.index");            
+            if ($request->status == 1) {
+                return redirect()->route("posts.borrador");
+            } else {
+                return redirect()->route("posts.index");
+            }
         } catch (\Throwable $th) {
             DB::rollBack();
             return $th;
@@ -203,10 +211,9 @@ class PostController extends Controller
 
             DB::commit();
 
-            return redirect()->route("posts.index");
+            return redirect()->back();
         } catch (\Throwable $th) {
             DB::rollBack();
-
             return $th;
         }
     }

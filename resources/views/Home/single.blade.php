@@ -36,7 +36,7 @@
         <div class="container">
           <div class="section-header">
             <h2>{{ $post->name }}</h2>
-            <p>
+            {{-- <p>
                 @foreach ($post->tags as $tag)
                     @if($loop->last)
                         <a href="">{{ $tag->name }}</a>                                                            
@@ -44,7 +44,7 @@
                         <a href="">{{ $tag->name }} - </a>                                                            
                     @endif
                 @endforeach
-            </p>
+            </p> --}}
           </div>
   
           <div class="row">

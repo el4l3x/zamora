@@ -83,7 +83,7 @@
                                     <img src="{{ asset('storage/'.$post->image->url) }}" alt="Speaker 1" class="img-fluid">
                                     <div class="details">
                                         <h3><a href="{{ route('home.show', $post) }}">{{ $post->name }}</a></h3>
-                                        <p>
+                                        {{-- <p>
                                             @foreach ($post->tags as $tag)
                                                 @if($loop->last)
                                                     <a href="">{{ $tag->name }}.</a>                                                            
@@ -91,7 +91,7 @@
                                                     <a href="">{{ $tag->name }} - </a>                                                            
                                                 @endif
                                             @endforeach
-                                        </p>
+                                        </p> --}}
                                         <div class="social">
                                             <a href=""><i class="fa fa-twitter"></i></a>
                                             <a href=""><i class="fa fa-facebook"></i></a>

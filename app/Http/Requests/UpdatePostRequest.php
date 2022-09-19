@@ -36,9 +36,9 @@ class UpdatePostRequest extends FormRequest
 
         if ($this->status == 2) {
             $rules = array_merge($rules, [
-                'categoria' => 'required',
+                /* 'categoria' => 'required',
                 'tags' => 'required',
-                'resumen' => 'required',
+                'resumen' => 'required', */
                 'cuerpo' => 'required',
             ]);
         }
