@@ -157,10 +157,11 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
 
-            $usuario->delete();
+            $user = User::find($usuario);
+            $user->delete();
 
             $log = new Log();
-            $log->accion = "Eliminar al usuario ".$usuario->id;
+            $log->accion = "Eliminar al usuario ".$user->id;
             $log->user_id = Auth::user()->id;
             $log->save();
 
@@ -169,7 +170,7 @@ class UserController extends Controller
             return redirect()->back();
         } catch (\Throwable $th) {
             DB::rollBack();
-            return $th;
+            return throw $th;
         }
     }
 }
