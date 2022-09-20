@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -37,8 +38,9 @@ Route::middleware([
             'tags' => TagController::class, */
             'posts' => PostController::class,
             'usuarios' => UserController::class,
+            'roles' => RoleController::class,
         ]);
 
-        Route::get('borradores', [PostController::class, 'borradores'])->name('posts.borradores');
+        Route::get('borradores', [PostController::class, 'borradores'])->middleware('can:borradores.index')->name('posts.borradores');
     });
 });

@@ -323,16 +323,19 @@ return [
             'text' => 'Borradores',
             'url'  => 'admin/borradores',
             'icon' => 'fab fa-fw fa-buffer',
+            'can' => 'borradores.index',
         ],
         [
             'text' => 'Publicadas',
             'url'  => 'admin/posts',
             'icon' => 'far fa-fw fa-bookmark',
+            'can' => 'posts.index',
         ],
         [
             'text' => 'Nueva',
             'url'  => 'admin/posts/create',
             'icon' => 'far fa-fw fa-file',
+            'can' => 'posts.create',
         ],
         /* [
             'text'    => 'multilevel',
@@ -377,6 +380,13 @@ return [
             'text' => 'Usuarios',
             'url'  => 'admin/usuarios',
             'icon' => 'fas fa-fw fa-users',
+            'can' => 'users.index',
+        ],
+        [
+            'text' => 'Roles',
+            'route'  => 'roles.index',
+            'icon' => 'fas fa-fw fa-users-cog',
+            'can' => 'users.index',
         ],
         /* [
             'text'       => 'important',

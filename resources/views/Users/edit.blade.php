@@ -21,10 +21,17 @@
     <div class="form-group mb-3">
         <p class="font-weith-bold">Roles</p>
         @foreach ($roles as $rol)
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="rol{{$rol->id}}" value="{{ $rol->id }}" name="roles[]">
-                <label class="form-check-label" for="rol{{$rol->id}}">{{ $rol->name }}</label>
-            </div>
+            @if ($usuario->hasRole($rol->id))
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="rol{{$rol->id}}" value="{{ $rol->id }}" name="roles[]" checked>
+                    <label class="form-check-label" for="rol{{$rol->id}}">{{ $rol->name }}</label>
+                </div>
+            @else
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="rol{{$rol->id}}" value="{{ $rol->id }}" name="roles[]">
+                    <label class="form-check-label" for="rol{{$rol->id}}">{{ $rol->name }}</label>
+                </div>                
+            @endif
         @endforeach
         @error('tags')
             <br>

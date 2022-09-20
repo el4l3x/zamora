@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:posts.index')->only('index');
+        $this->middleware('can:posts.create')->only('create', 'store');
+        $this->middleware('can:posts.edit')->only('edit', 'update');
+        $this->middleware('can:posts.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

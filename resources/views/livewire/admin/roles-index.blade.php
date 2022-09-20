@@ -4,42 +4,30 @@
             <input wire:model="search" type="text" class="form-control" placeholder="Buscar...">
         </div>
         
-        @if ($users->count())
+        @if ($roles->count())
         <div class="card-body">
             <table class="table table-hover table-striped">
                 <thead class="table-light">
                     <tr>
                         <td>ID</td>
                         <td>Nombre</td>
-                        <td>Usuario</td>
-                        <td>Roles</td>
                         <td colspan="2"></td>
                     </tr>
                 </thead>
             
                 <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($roles as $rol)
                        <tr>
-                            <td>{{ $user->id }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->username }}</td>
-                            <td>
-                                @foreach ($user->getRoleNames() as $rol)
-                                    @if ($loop->last)
-                                        {{$rol}}.
-                                    @else
-                                        {{$rol}} -
-                                    @endif
-                                @endforeach
-                            </td>
+                            <td>{{ $rol->id }}</td>
+                            <td>{{ $rol->name }}</td>
                             <td width="10px">
-                                @can('users.edit')
-                                    <a href="{{ route('usuarios.edit', $user) }}" class="btn btn-primary btn-sm">Editar</a>                                    
+                                @can('roles.edit')
+                                    <a href="{{ route('roles.edit', $rol) }}" class="btn btn-primary btn-sm">Editar</a>                                    
                                 @endcan
                             </td>
                             <td width="10px">
-                                @can('users.destroy')
-                                    <form action="{{ route('usuarios.destroy', $user) }}" method="POST">
+                                @can('roles.destroy')
+                                    <form action="{{ route('roles.destroy', $rol) }}" method="POST">
                                         @csrf
                                         @method('delete')
                                         <button class="btn btn-danger btn-sm" type="submit">
@@ -55,7 +43,7 @@
         </div>
 
         <div class="card-footer">
-             {{ $users->links() }}
+             {{ $roles->links() }}
         </div>
         @else
         <div class="card-body">

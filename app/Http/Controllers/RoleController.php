@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Log;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-use function GuzzleHttp\Promise\all;
-
-class UserController extends Controller
+class RoleController extends Controller
 {
-
     public function __construct()
     {
-        $this->middleware('can:users.index')->only('index');
-        $this->middleware('can:users.edit')->only('edit');
+        $this->middleware("can:roles.index")->only('index');
+        $this->middleware("can:roles.create")->only('create', 'store');
+        $this->middleware("can:roles.edit")->only('edit', 'update');
+        $this->middleware("can:roles.destroy")->only('destroy');
     }
     /**
      * Display a listing of the resource.
@@ -26,7 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view("Users.index");
+        return view("Roles.index");
     }
 
     /**
@@ -36,7 +35,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view("Users.create");
+        $permissions = Permission::all();
+        return view("Roles.create", [
+            "permissions" => $permissions,
+        ]);
     }
 
     /**
@@ -47,7 +49,33 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $request->validate([
+                'nombre' => 'required',
+                'permisos' => 'array',
+            ]);
+    
+            $rol = new Role();
+            $rol->name = $request->nombre;
+            $rol->guard_name = 'web';
+            $rol->save();
+    
+            $rol->permissions()->sync($request->permisos);
+
+            $log = new Log();
+            $log->accion = "Crear nuevo rol ".$rol->id;
+            $log->user_id = Auth::user()->id;
+            $log->save();
+
+            DB::commit();
+
+            return redirect()->route("roles.index");
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $th;
+        }
     }
 
     /**
@@ -67,13 +95,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $usuario)
+    public function edit(Role $role)
     {
-        /* return $usuario->getRoleNames(); */
-        $roles = Role::all();
-        return view("Users.edit", [
-            'usuario' => $usuario,
-            'roles' => $roles,
+        $permissions = Permission::all();
+
+        return view("Roles.edit", [
+            'rol' => $role,
+            'permissions' => $permissions,
         ]);
     }
 
@@ -84,27 +112,29 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $usuario)
+    public function update(Request $request, Role $role)
     {
         try {
             DB::beginTransaction();
 
             $request->validate([
-                'nombre' => 'required',
+                'nombre'  => 'required',
+                'permisos' => 'array',
             ]);
-            
-            $usuario->name = $request->nombre;
-            $usuario->save();
-            $usuario->roles()->sync($request->roles);
 
-            $log = new Log();
-            $log->accion = "Editar usuario ".$usuario->id;
+            $role->name = $request->nombre;
+            $role->save();
+
+            $role->permissions()->sync($request->permisos);
+
+            $log = New Log();
+            $log->accion = "Editar rol ".$role->id;
             $log->user_id = Auth::user()->id;
             $log->save();
 
             DB::commit();
-        
-            return redirect()->route('usuarios.index');
+
+            return redirect()->route("roles.index");
         } catch (\Throwable $th) {
             DB::rollBack();
             return $th;
@@ -117,15 +147,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($usuario)
+    public function destroy(Role $role)
     {
         try {
             DB::beginTransaction();
 
-            $usuario->delete();
+            $role->delete();
 
             $log = new Log();
-            $log->accion = "Eliminar al usuario ".$usuario->id;
+            $log->accion = "Eliminar rol ".$role->id;
             $log->user_id = Auth::user()->id;
             $log->save();
 

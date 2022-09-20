@@ -21,16 +21,20 @@
                             <td>{{ $post->id }}</td>
                             <td>{{ $post->name }}</td>
                             <td width="10px">
-                                <a href="{{ route('posts.edit', $post) }}" class="btn btn-primary btn-sm">Editar</a>
+                                @can('posts.edit')
+                                    <a href="{{ route('posts.edit', $post) }}" class="btn btn-primary btn-sm">Editar</a>                                    
+                                @endcan
                             </td>
                             <td width="10px">
-                                <form action="{{ route('posts.destroy', $post) }}" method="POST">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="btn btn-danger btn-sm" type="submit">
-                                        Eliminar
-                                    </button>
-                                </form>
+                                @can('posts.destroy')
+                                    <form action="{{ route('posts.destroy', $post) }}" method="POST">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="btn btn-danger btn-sm" type="submit">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                @endcan
                             </td>
                         </tr> 
                     @endforeach

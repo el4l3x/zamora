@@ -3,7 +3,9 @@
 @section('title', 'Alcaldia Zamora')
 
 @section('content_header')
-    <a class="btn btn-secondary btn-sm float-right" type="button" href="{{ route('posts.create') }}">Nueva Noticia</a>
+    @can('posts.create')
+        <a class="btn btn-secondary btn-sm float-right" type="button" href="{{ route('posts.create') }}">Nueva Noticia</a>
+    @endcan
     <h3>Lista de Noticias Publicadas</h3>
 @stop
 
