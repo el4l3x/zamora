@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 use function GuzzleHttp\Promise\all;
@@ -17,7 +18,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('can:users.index')->only('index');
-        $this->middleware('can:users.edit')->only('edit');
+        $this->middleware('can:users.edit')->only('edit', 'update');
+        $this->middleware('can:users.create')->only('create', 'store');
     }
     /**
      * Display a listing of the resource.
@@ -36,7 +38,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view("Users.create");
+        $roles = Role::all();
+        return view("Users.create", [
+            "roles" => $roles,
+        ]);
     }
 
     /**
@@ -47,7 +52,38 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $request->validate([
+                'nombre' => ['required', 'string', 'max:255'],
+                'usuario' => ['required', 'string', 'max:255', 'unique:users,username'],
+                'clave' => ['required', 'string', 'confirmed'],
+                'roles' => ['array'],
+            ]);
+
+            $user = new User();
+            $user->name = $request->nombre;
+            $user->username = $request->usuario;
+            $user->email = "prueba@test.com";
+            $user->password = Hash::make($request->clave);
+            $user->save();
+
+            $user->roles()->sync($request->roles);
+
+            $log = new Log();
+            $log->accion = "Crear usuario ".$user->id;
+            $log->user_id = Auth::user()->id;
+            $log->save();
+
+            DB::commit();
+
+            return view("Users.index");
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $th;
+        }
+        return $request;
     }
 
     /**
@@ -69,7 +105,6 @@ class UserController extends Controller
      */
     public function edit(User $usuario)
     {
-        /* return $usuario->getRoleNames(); */
         $roles = Role::all();
         return view("Users.edit", [
             'usuario' => $usuario,

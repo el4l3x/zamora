@@ -80,6 +80,9 @@
                             <div class="col-6">
     
                                 <div class="speaker">
+                                    {{-- <div class="image-wrapper">
+                                        <img src="{{ asset('storage/'.$post->image->url) }}" alt="" id="picture">
+                                    </div> --}}
                                     <img src="{{ asset('storage/'.$post->image->url) }}" alt="Speaker 1" class="img-fluid">
                                     <div class="details">
                                         <h3><a href="{{ route('home.show', $post) }}">{{ $post->name }}</a></h3>

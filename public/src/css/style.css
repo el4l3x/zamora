@@ -1669,3 +1669,15 @@ body.mobile-nav-active #mobile-nav-toggle {
 	justify-content: center;
 	align-items: center;
 }
+
+.image-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+}
+
+.image-wrapper img {
+  position: absolute;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
