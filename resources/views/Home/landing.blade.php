@@ -78,12 +78,9 @@
                         @foreach ($posts as $post)
                             
                             <div class="col-6">
-    
-                                <div class="speaker">
-                                    {{-- <div class="image-wrapper">
-                                        <img src="{{ asset('storage/'.$post->image->url) }}" alt="" id="picture">
-                                    </div> --}}
-                                    <img src="{{ asset('storage/'.$post->image->url) }}" alt="Speaker 1" class="img-fluid">
+
+                                <div class="card speaker">
+                                    <img src="{{ asset('storage/'.$post->image->url) }}" alt="Speaker 1" class="img-fluid" style="height: 262.5px;">
                                     <div class="details">
                                         <h3><a href="{{ route('home.show', $post) }}">{{ $post->name }}</a></h3>
                                         {{-- <p>
@@ -102,7 +99,28 @@
                                             <a href=""><i class="fa fa-linkedin"></i></a>
                                         </div>
                                     </div>
-                                </div>  
+                                </div>
+    
+                                {{-- <div class="speaker">
+                                    <div class="details">
+                                        <h3><a href="{{ route('home.show', $post) }}">{{ $post->name }}</a></h3>
+                                        <p>
+                                            @foreach ($post->tags as $tag)
+                                                @if($loop->last)
+                                                    <a href="">{{ $tag->name }}.</a>                                                            
+                                                @else
+                                                    <a href="">{{ $tag->name }} - </a>                                                            
+                                                @endif
+                                            @endforeach
+                                        </p>
+                                        <div class="social">
+                                            <a href=""><i class="fa fa-twitter"></i></a>
+                                            <a href=""><i class="fa fa-facebook"></i></a>
+                                            <a href=""><i class="fa fa-google-plus"></i></a>
+                                            <a href=""><i class="fa fa-linkedin"></i></a>
+                                        </div>
+                                    </div>
+                                </div>   --}}
 
                             </div>
 
