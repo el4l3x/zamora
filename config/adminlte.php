@@ -372,8 +372,13 @@ return [
                 ],
             ],
         ], */
-        /* ['header' => 'labels'],
+        ['header' => 'Gestion'],
         [
+            'text' => 'Usuarios',
+            'url'  => 'admin/usuarios',
+            'icon' => 'fas fa-fw fa-users',
+        ],
+        /* [
             'text'       => 'important',
             'icon_color' => 'red',
             'url'        => '#',
