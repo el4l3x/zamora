@@ -120,6 +120,8 @@
 
 @section('js')
     <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/translations/es.js"></script>
+
 
     <script>
         /* ClassicEditor
@@ -129,7 +131,13 @@
             } ); */
             
         ClassicEditor
-        .create( document.querySelector( '#cuerpo' ) )
+        .create( document.querySelector( '#cuerpo' ), {
+            removePlugins: [ 'ImageConfig' ],
+            language: {
+                content: 'es',
+                ui: 'es',
+            },
+        } )
         .catch( error => {
             console.log( error );
         } );
